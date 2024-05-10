@@ -17,7 +17,7 @@ import { headerNav } from '@/constants';
             >
                     <ul>
                         <li v-for="(nav, key) in headerNav" :key="key">
-                            <a href="#intro">{{ nav.title }}</a>
+                            <a :href="nav.url" @click="scrollLink($event)">{{ nav.title }}</a>
                         </li>
                     </ul>
                 </nav>
@@ -46,6 +46,16 @@ import { headerNav } from '@/constants';
         methods: {
             toggleMobileMenu() {
                 this.isNavVisible = !this.isNavVisible;
+            },
+            scrollLink (event) {
+                event.preventDefault();
+
+                const targetId = event.target.getAttribute("href");
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: "smooth" });
+                }
             }
         }
     }
